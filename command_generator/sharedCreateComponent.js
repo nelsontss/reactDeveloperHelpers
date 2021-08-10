@@ -37,6 +37,7 @@ const createComponent = (path, componentName, componentBoilerplate, testBoilerpl
 
     fs.writeFileSync(`${path}/${componentName}.js`, componentBoilerplate)
     fs.writeFileSync(`${path}/${componentName}.test.js`, testBoilerplate)
+    fs.writeFileSync(`${path}/${componentName}.sass`, '')
     createPackageJson(path, componentName)
   }
 }

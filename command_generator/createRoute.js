@@ -6,7 +6,11 @@ const myArgs     = process.argv.slice(2)
 const repoPath   = myArgs[0] 
 const routeName  = myArgs[1]
 const path       = `./${repoPath}/src/pages/${routeName}`
-const { routes } = JSON.parse(fs.readFileSync(__dirname + '/settings.json', 'utf-8'))
+
+if (!fs.existsSync(`./${repoPath}/src/settings.json`)) {
+  fs.writeFileSync(`./${repoPath}/src/settings.json`, fs.readFileSync(__dirname + '/settings.json'))
+}
+const { routes } = JSON.parse(fs.readFileSync(`./${repoPath}/src/settings.json`, 'utf-8'))
 
 let componentBoilerplate = fs.readFileSync(__dirname + '/ComponentBoilerplate.js', 'utf-8')
 let testBoilerplate      = fs.readFileSync(__dirname + '/TestBoilerplate.test.js', 'utf-8')
@@ -39,6 +43,6 @@ let appBoilerPlate = fs.readFileSync(__dirname + '/AppBoilerplate.js', 'utf-8')
 if(!routes.includes(routeName)) {
   routes.push(routeName)
   addRoutesToAppFile(appBoilerPlate)
-  fs.writeFileSync(__dirname + '/settings.json', JSON.stringify({ routes }))
+  fs.writeFileSync(`./${repoPath}/src/settings.json`, JSON.stringify({ routes }))
   createComponent(path, routeName, componentBoilerplate, testBoilerplate, null)
 }
