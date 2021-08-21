@@ -72,8 +72,6 @@ class HtmlElement {
 
   generateHtml(identation = 4) {
     switch (this.type) {
-      case 'root':
-        return this.generateChildrenOrValue(identation)
       case 'div':
         return this.divString(identation)
       case 'span':
@@ -109,11 +107,11 @@ class HtmlElement {
       string = string.concat(`${this.stylesSassString(identation)}\n`)
     }
     
-    return string.concat(`${this.generateChildrenStyles(this.type == 'root' ? 0 : identation)}`)
+    return string.concat(`${this.generateChildrenStyles(identation)}`)
   }
 
   getComponentName() {
-    return toComponentName(this.children[0].classname)
+    return toComponentName(this.classname)
   }
 
   getStyle(styles, styleToGet) {

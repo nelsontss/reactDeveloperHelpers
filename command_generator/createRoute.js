@@ -18,7 +18,7 @@ let testBoilerplate      = fs.readFileSync(__dirname + '/TestBoilerplate.test.js
 const addRoutesToAppFile = (appBoilerPlate) => {
   const appBoilerplateArray = appBoilerPlate.split('\n')
   let initialImportLine     = 7
-  let initialElemsLine      = 13
+  let initialElemsLine      = 14
 
   for (const route of routes) {
     const importString = [ `import ${route} from './pages/${route}'` ]

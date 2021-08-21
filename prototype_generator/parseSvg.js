@@ -104,10 +104,10 @@ const parseStyles = (properties, rect=null) => {
   return [styles, position]
 }
 
-const getPossibleBackground = (childrens, key) => {
-  switch (childrens[key].tagName) {
-    case 'g':
-      return childrens[key]?.children[0].tagName == 'rect' ? childrens[key]?.children[0] : null
+const getPossibleBackground = (childrens) => {
+  switch (childrens[0].tagName) {
+    case 'rect':
+      return childrens[0]
     default:
       return null;
   }
@@ -144,14 +144,14 @@ const pushMarginTopIfNeeded = (styles, position, parentPosition) => {
   }
 }
 
-const parseElems = (parsed, parentHtmlElement, possibleBackground=null) => {  
-  let nextHtmlElement
+const parseElem = (parsed, possibleBackground=null, parentHtmlElement=null) => {
+  let htmlElement
   if(parsed.type == 'element') {
     let [styles, position] = parseStyles(parsed.properties, possibleBackground)
 
     switch (parsed.tagName) {
       case 'g':
-        nextHtmlElement = new HtmlElement('div', parsed.properties.id, styles, null, [], position)
+        htmlElement = new HtmlElement('div', parsed.properties.id, styles, null, [], position)
         break;
       case 'text':
         position = [
@@ -164,47 +164,57 @@ const parseElems = (parsed, parentHtmlElement, possibleBackground=null) => {
         styles.push(...widthAndHeight)
         pushMarginLeftIfNeeded(styles, position, [parentHtmlElement.x, parentHtmlElement.y])
         if( getStyle(parentHtmlElement.styles, 'align-items') == undefined) pushMarginTopIfNeeded(styles, position, [parentHtmlElement.x, parentHtmlElement.y])
-        nextHtmlElement = new HtmlElement('div', 'text-field', styles, parsed.properties.id, [], position)
+        htmlElement = new HtmlElement('div', 'text-field', styles, parsed.properties.id, [], position)
         break;
       case 'rect':
         if (parsed.properties.id != undefined) {
           [styles, position] = parseStyles([], parsed)
-          nextHtmlElement = new HtmlElement('div', parsed.properties.id, styles, null, [], position)
+          htmlElement = new HtmlElement('div', parsed.properties.id, styles, null, [], position)
         }
         break;
       default:
         break;
     }
-
-    if(nextHtmlElement) parentHtmlElement.addChildren(nextHtmlElement)
   }
 
-  if(parsed.children) {
-    for (const key in parsed.children) {
-      parseElems(
-        parsed.children[key],
-        nextHtmlElement ? nextHtmlElement : parentHtmlElement,
-        getPossibleBackground(parsed.children, key)
-      )
-    }
-  }
+  return htmlElement
 }
 
+const parseElems = (parsed, parentHtmlElement=null) => {  
+  const possibleBackground = parsed.tagName === 'g' ? getPossibleBackground(parsed.children) : null
+  const htmlElement        = parseElem(parsed, possibleBackground, parentHtmlElement)
+  const children           = []
+  
+  if(htmlElement && parsed.children) {
+    for (const key in parsed.children) {
+      childrenElem = parseElems(parsed.children[key], htmlElement)
+
+      if (childrenElem != undefined) children.push(childrenElem)
+    }
+
+    htmlElement.children = children
+  }
+
+  return htmlElement
+}
+
+
+
+//main
 const file   = fs.readFileSync(__dirname + '/video_card.svg','utf-8')
 const parsed = parse(file)
 
-let htmlElement = new HtmlElement('root', null, null, null, [], [])
-parseElems(parsed, htmlElement)
+let htmlElement = parseElems(parsed.children[0].children[0])
 htmlElement.getPositionsFromChildren()
 htmlElement.generateSpacingStyle()
 const elementsString = htmlElement.generateHtml()
 const stylesString = htmlElement.generateStylesSass()
 createComponent(
-  `./myapp/src/components/${htmlElement.getComponentName()}`,
+  __dirname + `/../example-project/src/components/${htmlElement.getComponentName()}`,
   htmlElement.getComponentName(),
   fs.readFileSync('./command_generator/ComponentBoilerplate.js', 'utf-8'),
   fs.readFileSync('./command_generator/TestBoilerplate.test.js', 'utf-8'),
   null,
   elementsString
 )
-fs.writeFileSync(`./myapp/src/components/${htmlElement.getComponentName()}/${htmlElement.getComponentName()}.sass`, stylesString)
+fs.writeFileSync(__dirname + `/../example-project/src/components/${htmlElement.getComponentName()}/${htmlElement.getComponentName()}.sass`, stylesString)
