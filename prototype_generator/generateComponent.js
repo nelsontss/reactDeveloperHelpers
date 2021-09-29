@@ -198,23 +198,31 @@ const parseElems = (parsed, parentHtmlElement=null) => {
   return htmlElement
 }
 
-
+const getComponentBaseElement = (elems) => {
+  return elems.find( elem => elem.tagName === 'g' )
+}
 
 //main
-const file   = fs.readFileSync(__dirname + '/video_card.svg','utf-8')
-const parsed = parse(file)
+const myArgs   = process.argv.slice(2)
+const repoPath = myArgs[0] 
+const svgPath  = myArgs[1]
+const file     = fs.readFileSync(`./${svgPath}`,'utf-8')
+const parsed   = parse(file)
 
-let htmlElement = parseElems(parsed.children[0].children[0])
+const baseSvgElement = getComponentBaseElement(parsed.children[0].children)
+let htmlElement      = parseElems(baseSvgElement)
+
 htmlElement.getPositionsFromChildren()
 htmlElement.generateSpacingStyle()
 const elementsString = htmlElement.generateHtml()
-const stylesString = htmlElement.generateStylesSass()
+const stylesString   = htmlElement.generateStylesSass()
+
 createComponent(
-  __dirname + `/../example-project/src/components/${htmlElement.getComponentName()}`,
+  `./${repoPath}/src/components/${htmlElement.getComponentName()}`,
   htmlElement.getComponentName(),
   fs.readFileSync('./command_generator/ComponentBoilerplate.js', 'utf-8'),
   fs.readFileSync('./command_generator/TestBoilerplate.test.js', 'utf-8'),
   null,
   elementsString
 )
-fs.writeFileSync(__dirname + `/../example-project/src/components/${htmlElement.getComponentName()}/${htmlElement.getComponentName()}.sass`, stylesString)
+fs.writeFileSync(`./${repoPath}/src/components/${htmlElement.getComponentName()}/${htmlElement.getComponentName()}.sass`, stylesString)

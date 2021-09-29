@@ -7,6 +7,7 @@
     "create-folder-struct": "node command_generator/createFolderStruct",
     "create-component": "node command_generator/createComponent",
     "create-route": "node command_generator/createRoute",
+    "generate-component": "node prototype_generator/generateComponent",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
