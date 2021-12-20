@@ -1,0 +1,40 @@
+<svg width="547" height="285" viewBox="0 0 547 285" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="547" height="285" fill="#E5E5E5"/>
+<g id="Card col align-center justify-center">
+<rect width="547" height="285" fill="#A9B5A8"/>
+<g id="title col align-center">
+<g id="title-text">
+<text id="SEND ME A MESSAGE!" fill="white" xml:space="preserve" style="white-space: pre" font-family="Open Sans, sans-serif" font-size="16" font-weight="bold" letter-spacing="0em"><tspan x="189.453" y="53.207">SEND ME A MESSAGE!</tspan></text>
+</g>
+<g id="title-line">
+<rect id="rec" x="239" y="68" width="69" height="2" rx="1" fill="white"/>
+</g>
+</g>
+<g id="form">
+<g id="row-2 row">
+<g id="email display-flex align-center">
+<rect x="47" y="92" width="280" height="27" rx="4" fill="white"/>
+<text id="EMAIL ADRESS" fill="#A9B5A8" xml:space="preserve" style="white-space: pre" font-family="Open Sans, sans-serif" font-size="14" letter-spacing="0em"><tspan x="57" y="110.931">EMAIL ADRESS</tspan></text>
+</g>
+<g id="name display-flex align-center">
+<rect x="335" y="92" width="165" height="27" rx="4" fill="white"/>
+<text id="NAME" fill="#A9B5A8" xml:space="preserve" style="white-space: pre" font-family="Open Sans, sans-serif" font-size="14" letter-spacing="0em"><tspan x="345" y="110.931">NAME</tspan></text>
+</g>
+</g>
+<g id="row-1 row">
+<g id="subject display-flex align-center">
+<rect x="47" y="127" width="280" height="27" rx="4" fill="white"/>
+<text id="SUBJECT" fill="#A9B5A8" xml:space="preserve" style="white-space: pre" font-family="Open Sans, sans-serif" font-size="14" letter-spacing="0em"><tspan x="57" y="145.931">SUBJECT</tspan></text>
+</g>
+<g id="company display-flex align-center">
+<rect x="335" y="127" width="165" height="27" rx="4" fill="white"/>
+<text id="COMPANY/BRAND" fill="#A9B5A8" xml:space="preserve" style="white-space: pre" font-family="Open Sans, sans-serif" font-size="14" letter-spacing="0em"><tspan x="345" y="145.931">COMPANY/BRAND</tspan></text>
+</g>
+</g>
+<g id="message display-flex">
+<rect x="47" y="162" width="453" height="84" rx="4" fill="white"/>
+<text id="MESSAGE" fill="#A9B5A8" xml:space="preserve" style="white-space: pre" font-family="Open Sans, sans-serif" font-size="14" letter-spacing="0em"><tspan x="57" y="181.931">MESSAGE</tspan></text>
+</g>
+</g>
+</g>
+</svg>

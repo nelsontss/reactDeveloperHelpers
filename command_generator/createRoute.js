@@ -5,6 +5,7 @@ const fs = require('fs')
 const myArgs     = process.argv.slice(2)
 const repoPath   = myArgs[0] 
 const routeName  = myArgs[1]
+const componentsInRoute = myArgs[2].split(',')
 const path       = `./${repoPath}/src/pages/${routeName}`
 
 if (!fs.existsSync(`./${repoPath}/src/settings.json`)) {
@@ -38,11 +39,28 @@ const addRoutesToAppFile = (appBoilerPlate) => {
   fs.writeFileSync(`./${repoPath}/src/App.js`, appBoilerplateArray.join('\n'))
 }
 
+const addComponentsImports = (componentsInRoute) => {
+  page = fs.readFileSync(`./${repoPath}/src/pages/${routeName}/${routeName}.js`, 'utf-8')
+  const pageArray = page.split('\n')
+
+  for (const i in componentsInRoute) {
+    const importString = [ `import ${componentsInRoute[i]} from './components/${componentsInRoute[i]}'` ]
+    
+    pageArray.splice(2 + parseInt(i), '0', ...importString)
+  }
+
+  fs.writeFileSync(`./${repoPath}/src/pages/${routeName}/${routeName}.js`, pageArray.join('\n'))
+}
+
 
 let appBoilerPlate = fs.readFileSync(__dirname + '/AppBoilerplate.js', 'utf-8')
 if(!routes.includes(routeName)) {
   routes.push(routeName)
   addRoutesToAppFile(appBoilerPlate)
   fs.writeFileSync(`./${repoPath}/src/settings.json`, JSON.stringify({ routes }))
-  createComponent(path, routeName, componentBoilerplate, testBoilerplate, null)
+  createComponent(path, routeName, componentBoilerplate, testBoilerplate, componentsInRoute)
+
+  if(componentsInRoute && componentsInRoute.length > 0){
+    addComponentsImports(componentsInRoute.reverse())
+  }
 }

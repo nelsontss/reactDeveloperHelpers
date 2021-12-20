@@ -1,0 +1,20 @@
+<svg width="374" height="285" viewBox="0 0 374 285" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="374" height="285" fill="#E5E5E5"/>
+<g id="LoginComponent col align-center justify-center">
+<rect width="374" height="285" fill="#A9B5A8"/>
+<g id="form">
+<g id="email display-flex align-center">
+<rect x="47" y="84.5" width="280" height="27" rx="4" fill="white"/>
+<text id="username" fill="#A9B5A8" xml:space="preserve" style="white-space: pre" font-family="Open Sans, sans-serif" font-size="14" letter-spacing="0em"><tspan x="57" y="103.431">username</tspan></text>
+</g>
+<g id="subject display-flex align-center">
+<rect x="47" y="119.5" width="280" height="27" rx="4" fill="white"/>
+<text id="password" fill="#A9B5A8" xml:space="preserve" style="white-space: pre" font-family="Open Sans, sans-serif" font-size="14" letter-spacing="0em"><tspan x="57" y="138.431">password</tspan></text>
+</g>
+</g>
+<g id="button-text display-flex align-center">
+<rect x="47" y="176.5" width="280" height="24" rx="4" fill="white"/>
+<text id="Login" fill="#A9B5A8" xml:space="preserve" style="white-space: pre" font-family="Open Sans, sans-serif" font-size="16" font-weight="bold" letter-spacing="0em"><tspan x="165.297" y="194.707">Login</tspan></text>
+</g>
+</g>
+</svg>
